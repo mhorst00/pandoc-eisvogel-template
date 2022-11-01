@@ -6,21 +6,59 @@ jobs:
   convert_via_pandoc:
     runs-on: ubuntu-latest
     steps:
+      - name: download pandoc binary
+        run: >
+          curl -s https://api.github.com/repos/jgm/pandoc/releases/latest 
+          | grep "browser_download_url.*amd64.deb" 
+          | cut -d : -f 2,3 
+          | tr -d \" 
+          | wget -qi - -O pandoc.deb
+
+      - name: install pandoc
+        run: sudo apt install -y ./pandoc.deb
+
+      - name: install latex packages
+        uses: teatimeguest/setup-texlive-action@v2
+        with:
+          packages: >-
+            scheme-basic
+            adjustbox 
+            babel-german 
+            background 
+            bidi 
+            collectbox 
+            csquotes 
+            everypage 
+            filehook 
+            footmisc 
+            footnotebackref 
+            framed 
+            fvextra 
+            letltxmacro 
+            ly1 
+            mdframed 
+            mweights 
+            needspace 
+            pagecolor 
+            sourcecodepro 
+            sourcesanspro 
+            titling 
+            ucharcat 
+            ulem 
+            unicode-math 
+            upquote 
+            xecjk 
+            xurl 
+            zref
+            scrartcl
+
       - uses: actions/checkout@v2
+
       - name: create output directory
         run: mkdir out 
 
-      - uses: docker://pandoc/latex:latest
-        with:
-          args: ./doc/document.md 
-		            ./doc/header-includes.yaml 
-		            --output ./out/document.pdf 
-		            --from markdown 
-		            --template ./eisvogel.tex 
-		            --listings 
-		            --bibliography ./doc/bibliography.bib 
-		            --citeproc 
-		            --toc 
+      - name: make document
+        run: make
           
       - uses: actions/upload-artifact@master
         with:
