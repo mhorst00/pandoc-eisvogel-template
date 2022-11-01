@@ -1,0 +1,13 @@
+---
+title: "pandoc-eisvogel-template"
+author: [mhorst00]
+date: "2022-10-21"
+subject: "Template"
+keywords: [pandoc, eisvogel, template]
+lang: "en"
+link-citations: true
+listings: true
+toc: true
+bibliography: "./doc/bibliography.bib"
+csl: "ieee.csl"
+...
