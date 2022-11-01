@@ -1,0 +1,1 @@
+# pandoc-eisvogel-template
