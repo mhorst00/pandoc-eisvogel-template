@@ -1,0 +1,28 @@
+name: Generate PDF
+
+on: push
+
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: create output directory
+        run: mkdir out 
+
+      - uses: docker://pandoc/latex:latest
+        with:
+          args: ./doc/document.md 
+		            ./doc/header-includes.yaml 
+		            --output ./out/document.pdf 
+		            --from markdown 
+		            --template ./eisvogel.tex 
+		            --listings 
+		            --bibliography ./doc/bibliography.bib 
+		            --citeproc 
+		            --toc 
+          
+      - uses: actions/upload-artifact@master
+        with:
+          name: output
+          path: out/document.pdf
