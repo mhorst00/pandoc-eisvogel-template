@@ -21,7 +21,7 @@ jobs:
         uses: teatimeguest/setup-texlive-action@v2
         with:
           packages: >-
-            scheme-basic
+            scheme-medium
             adjustbox 
             babel-german 
             background 
@@ -50,7 +50,6 @@ jobs:
             xecjk 
             xurl 
             zref
-            scrartcl
 
       - uses: actions/checkout@v2
 
